@@ -1,5 +1,4 @@
 import pygame
-
 pygame.init()
 
 # Set up the display window
@@ -13,11 +12,12 @@ LAND_COLOR = (60, 179, 113) # Dark green
 WATER_COLOR = (0, 0, 128) # Deep blue
 SKY_COLOR = (135, 206, 235) # Sky blue
 
-# Draw the land, water, and sky rectangles
+# Dimensions of the background
 water_rect = pygame.Rect(0, screen_height // 3, screen_width, screen_height // 3)
 land_rect = pygame.Rect(0, screen_height // 3 * 2, screen_width, screen_height // 3)
 sky_rect = pygame.Rect(0, 0, screen_width, screen_height // 3)
 
+# Draw background
 pygame.draw.rect(screen, LAND_COLOR, land_rect)
 pygame.draw.rect(screen, WATER_COLOR, water_rect)
 pygame.draw.rect(screen, SKY_COLOR, sky_rect)
