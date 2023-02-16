@@ -14,12 +14,13 @@ WATER_COLOR = (0, 0, 128) # Deep blue
 SKY_COLOR = (135, 206, 235) # Sky blue
 
 # Draw the land, water, and sky rectangles
-land_rect = pygame.Rect(0, screen_height // 3, screen_width, screen_height // 3)
-water_rect = pygame.Rect(0, screen_height // 3 * 2, screen_width, screen_height // 3)
+water_rect = pygame.Rect(0, screen_height // 3, screen_width, screen_height // 3)
+land_rect = pygame.Rect(0, screen_height // 3 * 2, screen_width, screen_height // 3)
 sky_rect = pygame.Rect(0, 0, screen_width, screen_height // 3)
-pygame.draw.rect(screen, SKY_COLOR, sky_rect)
+
 pygame.draw.rect(screen, LAND_COLOR, land_rect)
 pygame.draw.rect(screen, WATER_COLOR, water_rect)
+pygame.draw.rect(screen, SKY_COLOR, sky_rect)
 
 # Update the screen
 pygame.display.update()
