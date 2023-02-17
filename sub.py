@@ -20,6 +20,7 @@ sky_rect = pygame.Rect(0, 0, screen_width, screen_height // 3)
 
 # Load the submarine image
 submarine_image = pygame.image.load("submarine.png")
+submarine_image = pygame.transform.scale(submarine_image, (submarine_image.get_width() // 2, submarine_image.get_height() // 2))
 submarine = pygame.Surface(submarine_image.get_size())
 submarine_rect = submarine_image.get_rect()
 submarine_rect.centerx = screen_width // 2
@@ -30,7 +31,12 @@ submarine_x = screen_width // 2
 submarine_y = screen_height // 2
 
 # Set the submarine speed
-submarine_speed = 5
+submarine_speed = 15
+
+moving_left = False
+moving_right = False
+moving_up = False
+moving_down = False
 
 # Game loop
 running = True
@@ -41,20 +47,47 @@ while running:
             running = False
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                submarine_rect.centerx -= submarine_speed
+                moving_left = True
             elif event.key == pygame.K_RIGHT:
-                submarine_rect.centerx += submarine_speed
+                moving_right = True
             elif event.key == pygame.K_UP:
-                submarine_rect.bottom -= submarine_speed
+                moving_up = True
             elif event.key == pygame.K_DOWN:
-                submarine_rect.bottom += submarine_speed
+                moving_down = True
+        elif event.type == pygame.KEYUP:
+            if event.key == pygame.K_LEFT:
+                moving_left = False
+            elif event.key == pygame.K_RIGHT:
+                moving_right = False
+            elif event.key == pygame.K_UP:
+                moving_up = False
+            elif event.key == pygame.K_DOWN:
+                moving_down = False
 
-    # Draw background
+    # Update the submarine's position
+    if moving_left:
+        submarine_rect.centerx -= submarine_speed
+    if moving_right:
+        submarine_rect.centerx += submarine_speed
+    if moving_up:
+        submarine_rect.bottom -= submarine_speed
+    if moving_down:
+        submarine_rect.bottom += submarine_speed
+
+    # Keep the submarine on the screen
+    if submarine_rect.left < 0:
+        submarine_rect.left = 0
+    if submarine_rect.right > screen_width:
+        submarine_rect.right = screen_width
+    if submarine_rect.top < water_rect.bottom:
+        submarine_rect.top = water_rect.bottom
+    if submarine_rect.bottom > land_rect.top:
+        submarine_rect.bottom = land_rect.top
+
+    # Draw the background and the submarine
     pygame.draw.rect(screen, LAND_COLOR, land_rect)
     pygame.draw.rect(screen, WATER_COLOR, water_rect)
     pygame.draw.rect(screen, SKY_COLOR, sky_rect)
-
-    # Draw the submarine
     screen.blit(submarine_image, submarine_rect)
 
     # Update the screen
